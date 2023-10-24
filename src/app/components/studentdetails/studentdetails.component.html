@@ -1,4 +1,8 @@
-<app-u-nav></app-u-nav>
-<app-sdetails></app-sdetails>
-<app-smarkpanel></app-smarkpanel>
+<div *ngIf="userData.role==1"><app-u-nav></app-u-nav></div>
+<div *ngIf="userData.role==0"><app-a-nav></app-a-nav></div>
+<div *ngIf="userData.role==1"><app-sdetails></app-sdetails></div>
+<div *ngIf="userData.role==0"><app-sdetails [id]="id"></app-sdetails></div>
+<div *ngIf="userData.role==1"><app-smarkpanel></app-smarkpanel></div>
+<div *ngIf="userData.role==0"><app-smarkpanel [id]="id"></app-smarkpanel></div>
+
 

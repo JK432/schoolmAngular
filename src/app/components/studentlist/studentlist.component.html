@@ -1,1 +1,30 @@
-<p>studentlist works!</p>
+<app-a-nav></app-a-nav>
+<div class="tablecontainer">
+
+<table class="table" >
+  <thead class="thead">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Students</th>
+      <th scope="col">Email</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+
+    <tr *ngFor="let item of stuData ;let i = index">
+      <td scope="row">{{i+1}}</td>
+      <td>{{item.first_name +" " +item.last_name}}</td>
+      <td>{{item.email}}</td>
+      <td> <a href="/student/{{item.id}}">Details</a></td>
+    </tr>
+
+  </tbody>
+</table>
+
+</div>
+
+
+

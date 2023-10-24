@@ -1,0 +1,22 @@
+.tablecontainer {
+  width: 40vw;
+  margin-top: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-left: 20px;
+}
+
+.table {
+  border-radius: 20px;
+}
+
+.thead {
+  background-color: black;
+}
+
+th {
+  background-color: rgb(39, 38, 38);
+  color: aliceblue;
+  font-size: 15px;
+  padding: 10px;
+}

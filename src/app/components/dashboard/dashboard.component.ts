@@ -9,6 +9,14 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+
+  dataFromChild: number = 0;
+
+  receiveDataFromChild(data: number) {
+    this.dataFromChild = data;
+    console.log(this.dataFromChild);
+  }
+
   subData: any = [];
   userData: any = [];
   constructor(private http: HttpClient, private authenticationService: AuthenticationService,) { }
@@ -20,34 +28,20 @@ export class DashboardComponent {
 
     this.http.get(environment.apiUrl + '/subject/')
       .subscribe((data) => {
-        // this.jsonData = JSON.parse(data);
         this.subData = data;
         console.log(data);
 
-        // Handle the response data
-
       }, (error) => {
-        // Handle any errors
 
       });
   }
 
-  // getsubname(obj: any, id: number) {
-  //   let name: string = "";
-  //   try {
-  //     name = this.jsonData.subject.name
-  //   } catch (error) {
-  //     name = this.jsonData[id].subject.name;
-  //   }
 
-  //   return name;
-
-  // }
 
   getRandomColorPairClass() {
-
+    console.log(this.dataFromChild);
     const classNames = ['l-bg-cyan', 'l-bg-green', 'l-bg-orange',]; // Add class names for all color pairs
     const randomIndex = Math.floor(Math.random() * classNames.length);
-    return classNames[randomIndex];
+    return 'l-bg-green';
   }
 }

@@ -8,37 +8,41 @@ import { environment } from 'src/environments/environment';
 })
 export class AvgmarkComponent {
   markData: any = [];
+  avg:number=0;
   @Input() subid:any;
   constructor(private http: HttpClient,) { }
 
-  @Output() dataEmitter: EventEmitter<string> = new EventEmitter();
+  @Output() dataEmitter: EventEmitter<number> = new EventEmitter();
 
   sendDataToParent() {
-    this.dataEmitter.emit('Data from child component');
+    this.dataEmitter.emit(this.avg);
+
   }
 
   ngOnInit() {
-
     this.fetchData();
+
   }
 
 
 
 
   fetchData() {
-
     this.http.get(environment.apiUrl + '/mark/?subject='+this.subid )
       .subscribe((data) => {
-        // this.jsonData = JSON.parse(data);
         this.markData = data;
+
         for (let i = 0; i < this.markData.length; i++) {
-
+            this.avg = this.avg+this.markData[i].mark;
+            console.log(this.markData[i].mark)
         }
-        console.log(this.markData.length);
-        console.log(data);
-
-        // Handle the response data
-
+        if(this.markData.length>0){
+          this.avg=this.avg/this.markData.length;
+        }else{
+          this.avg= 0;
+        }
+      // Handle the response data
+        this.sendDataToParent()
       }, (error) => {
         // Handle any errors
 

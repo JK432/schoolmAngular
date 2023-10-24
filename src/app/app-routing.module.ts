@@ -4,16 +4,19 @@ import { LoginComponent } from './components/login/login.component';
 import { StudentdetailsComponent } from './components/studentdetails/studentdetails.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SubjectlistComponent } from './components/subjectlist/subjectlist.component';
+import { StudentlistComponent } from './components/studentlist/studentlist.component';
 const routes: Routes = [
   {
     path:'student',
     component:StudentdetailsComponent,
-    canActivate:[AuthGuard,]
+    canActivate:[AuthGuard]
   },
+  { path: 'student/:id', component: StudentdetailsComponent, canActivate: [AuthGuard,] },
   {
     path: 'dash',
     component: DashboardComponent,
-    canActivate: [AuthGuard,]
+    canActivate: [AuthGuard]
   },
   {
     path: '',
@@ -22,7 +25,17 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component:LoginComponent
+    component: LoginComponent,
+  },
+  {
+    path: 'subjects',
+    component: SubjectlistComponent,
+    canActivate: [AuthGuard,]
+  },
+  {
+    path: 'students',
+    component: StudentlistComponent,
+    canActivate: [AuthGuard,]
   },
 ];
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Input} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -11,20 +11,21 @@ export class SmarkpanelComponent {
   jsonData:any =[];
   userData: any = [];
   subjectData:any=[];
+  @Input() id: any;
   constructor(private http: HttpClient, private authenticationService: AuthenticationService,) { }
   ngOnInit() {
     this.userData = this.authenticationService.getudata();
     console.log(this.userData.role)
     if(this.userData.role==1){
-      this.fetchData(this.userData.email);
+      this.fetchData(this.userData.id);
     }else{
-
+      this.fetchData(this.id);
     }
 
 
   }
   fetchData(email:string) {
-    let url:string = environment.apiUrl + '/mark/?email=' +email
+    let url: string = environment.apiUrl + '/mark/?student=' +email
     this.http.get(url)
       .subscribe((data) => {
         // this.jsonData = JSON.parse(data);
