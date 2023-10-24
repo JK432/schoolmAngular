@@ -1,0 +1,6 @@
+<div id="alert" class="alert" *ngIf="message" [style.display]="dispaly" style="display: block;">
+  <div class="alert-content" >
+    <p>{{ message }}</p>
+    <button (click)="closeAlert()">Close</button>
+  </div>
+</div>
