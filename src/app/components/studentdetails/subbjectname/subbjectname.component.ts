@@ -13,14 +13,11 @@ export class SubbjectnameComponent {
 
   ngOnInit() {
     this.getsubname();
-
-
   }
 
   getsubname() {
     let url: string = environment.apiUrl + '/subject/' + this.data + '/'
-    this.http.get(url)
-      .subscribe((data) => {
+    this.http.get(url).subscribe((data) => {
         // this.jsonData = JSON.parse(data);
         this.subjectData = data;
         console.log(data)

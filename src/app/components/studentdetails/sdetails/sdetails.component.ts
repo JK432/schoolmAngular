@@ -27,7 +27,6 @@ export class SdetailsComponent {
     }
   }
 
-
   fetchData(email: string) {
     this.http.get(environment.apiUrl + '/register/' + email + '/')
       .subscribe((data) => {
@@ -37,9 +36,10 @@ export class SdetailsComponent {
   }
 
   getRandomColorPairClass() {
-
     const classNames = ['l-bg-cyan', 'l-bg-green', 'l-bg-orange',]; // Add class names for all color pairs
     const randomIndex = Math.floor(Math.random() * classNames.length);
     return classNames[randomIndex];
   }
 }
+
+

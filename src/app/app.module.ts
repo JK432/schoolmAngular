@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { TokenInterceptor } from './helpers/token.interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
@@ -22,7 +21,10 @@ import { SubjectlistComponent } from './components/subjectlist/subjectlist.compo
 import { StudentlistComponent } from './components/studentlist/studentlist.component';
 import { SubbjectnameComponent } from './components/studentdetails/subbjectname/subbjectname.component';
 import { AvgmarkComponent } from './components/dashboard/avgmark/avgmark.component';
-
+import { SubformComponent } from './components/subjectlist/subform/subform.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AddsubformComponent } from './components/subjectlist/addsubform/addsubform.component';
 @
 NgModule({
   declarations: [
@@ -38,7 +40,9 @@ NgModule({
     SubjectlistComponent,
     StudentlistComponent,
     SubbjectnameComponent,
-    AvgmarkComponent
+    AvgmarkComponent,
+    SubformComponent,
+    AddsubformComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -49,6 +53,7 @@ NgModule({
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
+    MatDialogModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

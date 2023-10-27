@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-
+import { DialogserviceService } from 'src/app/services/dialogservice.service';
 @Component({
   selector: 'app-subjectlist',
   templateUrl: './subjectlist.component.html',
@@ -19,9 +19,8 @@ export class SubjectlistComponent {
 
   subData: any = [];
   userData: any = [];
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dialogService: DialogserviceService) { }
   ngOnInit() {
-
     this.fetchData();
   }
   fetchData() {
@@ -40,4 +39,15 @@ export class SubjectlistComponent {
     const randomIndex = Math.floor(Math.random() * classNames.length);
     return 'l-bg-green';
   }
+
+
+  openDialog(sdata:any) {
+    this.dialogService.openSubformDialog(sdata);
+  }
+
+addSubform(){
+
+  this.dialogService.openaddSubformDialog();
+}
+
 }
