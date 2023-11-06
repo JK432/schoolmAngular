@@ -1,0 +1,22 @@
+<div class="formcontainer">
+  <form (ngSubmit)="onSubmit()" [formGroup]="formgroup">
+    <div class="d-flex align-items-center mb-3 pb-1">
+      <span class="h3 fw-bold mb-0">Edit Mark</span>
+    </div>
+    <div class="formcontant">
+      <div class="form-outline mb-4">
+        <label class="form-label" for="selectsub">Subject</label>
+        <select id="selectsub" name="subject" title="Subject" formControlName="subject">
+          <option *ngFor="let sub of subjects" [value]="sub.id">{{sub.name}}</option>
+        </select>
+        <div class="sizedbox"></div>
+        <label class="form-label" for="form2Example17">Mark</label>
+        <input type="email" id="form2Example17" class="form-control form-control-lg" formControlName="mark"
+          value={{mark.mark}} />
+      </div>
+    </div>
+    <div class="pt-1 mb-3">
+      <button class="btn btn-dark btn-md btn-block sbutton" type="submit">Update</button>
+    </div>
+  </form>
+</div>

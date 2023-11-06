@@ -7,16 +7,16 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  loginformgroup: FormGroup; // Define the FormGroup
 
-  constructor(
-    private authenticationService: AuthenticationService,
-    private formBuilder: FormBuilder
-  ) {
-    this.loginformgroup = this.formBuilder.group({
-      email: ['', Validators.required], // Add validators if needed
-      password: ['', Validators.required] // Add validators if needed
+
+export class LoginComponent {
+
+  loginform: FormGroup; // Define the FormGroup
+
+  constructor( private authenticationService: AuthenticationService, private formBuilder: FormBuilder) {
+    this.loginform = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -24,18 +24,10 @@ export class LoginComponent {
   password: string = "";
   show: boolean = false;
 
-  // onSubmit(): void {
-  //   // Process checkout data here
-  //   console.warn('Your order has been submitted', this.loginformgroup.value);
-  //   this.loginformgroup.reset();
-  // }
-
   public onSubmit() {
     this.authenticationService.login(
-      this.loginformgroup.get('email')!.value,
-      this.loginformgroup.get('password')!.value
+      this.loginform.get('email')!.value,
+      this.loginform.get('password')!.value
     );
-
-
-}
+  }
 }

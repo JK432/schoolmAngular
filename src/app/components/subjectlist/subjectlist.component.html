@@ -1,6 +1,5 @@
 <app-a-nav></app-a-nav>
 <div class="tablecontainer">
-
   <table class="table">
     <thead class="thead">
       <tr>
@@ -10,14 +9,11 @@
       </tr>
     </thead>
     <tbody>
-
-      <tr *ngFor="let item of subData ;let i = index">
+      <tr *ngFor="let item of subjects ;let i = index">
         <td scope="row">{{i+1}}</td>
         <td>{{item.name}}</td>
         <td><a class="link" (click)="openDialog(item)">Edit</a></td>
       </tr>
-
     </tbody>
   </table>
-
 </div>

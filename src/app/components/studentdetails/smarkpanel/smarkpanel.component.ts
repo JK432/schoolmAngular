@@ -1,65 +1,61 @@
-import { Component,Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DialogserviceService } from 'src/app/services/dialogservice.service';
+import { Mark } from 'src/app/interfaces/mark';
+import { User } from 'src/app/interfaces/user';
+import { Subject } from 'src/app/interfaces/subject';
+
 @Component({
   selector: 'app-smarkpanel',
   templateUrl: './smarkpanel.component.html',
   styleUrls: ['./smarkpanel.component.css']
 })
+
+
 export class SmarkpanelComponent {
-  jsonData:any =[];
-  userData: any = [];
-  subjectData:any=[];
-  @Input() id: any;
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService,) { }
+
+  marks: Mark[] = [];
+  user: User;
+  subjects: Subject[] = [];
+
+  @Input() id: number = -1;
+
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService, private dialogService: DialogserviceService) {
+    this.user = this.authenticationService.getudata();
+  }
+
   ngOnInit() {
-    this.userData = this.authenticationService.getudata();
-    console.log(this.userData.role)
-    if(this.userData.role==1){
-      this.fetchData(this.userData.id);
-    }else{
-      this.fetchData(this.id);
+    if (this.user.role == 1) {
+      this.getMarks(this.user.id);
+    } else {
+      this.getMarks(this.id);
     }
-
-
+    this.getSubjects();
   }
-  fetchData(email:string) {
-    let url: string = environment.apiUrl + '/mark/?student=' +email
-    this.http.get(url)
-      .subscribe((data) => {
-        // this.jsonData = JSON.parse(data);
-        this.jsonData=data;
 
-        // Handle the response data
-
-      }, (error) => {
-        // Handle any errors
-
+  getMarks(id: number) {
+    let url: string = environment.apiUrl + '/mark/?student=' + id;
+    this.http.get<Mark[]>(url)
+      .subscribe({
+        next: (data) => {
+          this.marks = data;
+        }, error: (error) => { }
       });
   }
 
-  getsubname(sub:any,id:number){
-    let url: string = environment.apiUrl + '/subject/' + sub +'/'
-    this.http.get(url)
-      .subscribe((data) => {
-        // this.jsonData = JSON.parse(data);
-        this.subjectData = data;
-        console.log(data)
-        // Handle the response data
-
-      }, (error) => {
-        // Handle any errors
-
+  getSubjects() {
+    let url: string = environment.apiUrl + '/subject/'
+    this.http.get<Subject[]>(url)
+      .subscribe({
+        next: (data) => {
+          this.subjects = data;
+        }, error: (error) => { }
       });
-    return this.subjectData.name;
-
   }
 
-  getRandomColorPairClass() {
-
-    const classNames = ['l-bg-cyan', 'l-bg-green', 'l-bg-orange',]; // Add class names for all color pairs
-    const randomIndex = Math.floor(Math.random() * classNames.length);
-    return 'l-bg-green';
+  openDialog(mark: Mark) {
+    this.dialogService.openEditmarkDialog(mark, this.subjects);
   }
 }

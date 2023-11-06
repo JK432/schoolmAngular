@@ -1,31 +1,24 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
-  integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-
 <div class="container">
   <div class="row ">
-    <div *ngFor="let item of jsonData ;let i = index" class="col-xl-3 col-lg-3" >
-      <div class="card" [ngClass]="getRandomColorPairClass()">
+    <div *ngFor="let mark of marks ;let i = index" class="col-xl-3 col-lg-3" >
+      <div class="card l-bg-green" >
         <div class="card-statistic-3 p-3">
-          <div class="mb-4">
-          <app-subbjectname  [data]="item.subject"></app-subbjectname>
-            <!-- <h2 class="card-title mb-0">jfsjdf</h2> -->
+          <div class="mb-4 editdiv">
+          <app-subbjectname  [subjectId]="mark.subject"></app-subbjectname><div *ngIf="user.role==0" class="editbtn link" (click)="openDialog(mark)">Edit</div>
           </div>
           <div class="row align-items-center mb-2 d-flex">
             <div class="col-8">
               <h2 class="d-flex align-items-center mb-0">
-                {{item.mark}}
+                {{mark.mark}}
               </h2>
             </div>
           </div>
           <div class="progress mt-1 " data-height="8" style="height: 8px;">
             <div class="progress-bar l-bg-cyan" role="progressbar" data-width="20%" aria-valuenow="20" aria-valuemin="0"
-              aria-valuemax="100" [style.width]="item.mark+'%'"></div>
+              aria-valuemax="100" [style.width]="mark.mark+'%'"></div>
           </div>
         </div>
       </div>
     </div>
-
-
-
   </div>
 </div>

@@ -2,13 +2,17 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogserviceService } from 'src/app/services/dialogservice.service';
+import { Subject } from 'src/app/interfaces/subject';
+
 @Component({
   selector: 'app-addsubform',
   templateUrl: './addsubform.component.html',
   styleUrls: ['./addsubform.component.css']
 })
+
+
 export class AddsubformComponent {
 
   subformgroup: FormGroup;
@@ -23,16 +27,14 @@ export class AddsubformComponent {
 
   onSubmit() {
 
+    let newSubject: Subject = { id: -1, name: this.subformgroup.get('name')!.value };
 
-    this.http.post(environment.apiUrl + '/subject/', {
-      "name": this.subformgroup.get('name')!.value
-    })
-      .subscribe((data) => {
-        this.dialog.closeAll()
-        location.reload();
-      }, (error) => {
-
+    this.http.post<Subject>(environment.apiUrl + '/subject/', newSubject)
+      .subscribe({
+        next: (data) => {
+          this.dialog.closeAll()
+          location.reload();
+        }, error: (error) => { }
       });
-
   }
 }

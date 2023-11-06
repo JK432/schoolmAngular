@@ -1,0 +1,8 @@
+.map-container {
+  width: 90vw;
+  height: 250px;
+  margin-top: 30px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}

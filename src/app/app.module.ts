@@ -12,19 +12,21 @@ import { LoginComponent } from './components/login/login.component';
 import { UNavComponent } from './components/u-nav/u-nav.component';
 import { StudentdetailsComponent } from './components/studentdetails/studentdetails.component';
 import { BadRequestInterceptor } from './helpers/bad-request.interceptor';
-import { AlertComponent } from './components/alert/alert.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SmarkpanelComponent } from './components/studentdetails/smarkpanel/smarkpanel.component';
 import { SdetailsComponent } from './components/studentdetails/sdetails/sdetails.component';
 import { ANavComponent } from './components/a-nav/a-nav.component';
 import { SubjectlistComponent } from './components/subjectlist/subjectlist.component';
 import { StudentlistComponent } from './components/studentlist/studentlist.component';
-import { SubbjectnameComponent } from './components/studentdetails/subbjectname/subbjectname.component';
+import { SubbjectnameComponent } from './components/studentdetails/smarkpanel/subbjectname/subbjectname.component';
 import { AvgmarkComponent } from './components/dashboard/avgmark/avgmark.component';
 import { SubformComponent } from './components/subjectlist/subform/subform.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddsubformComponent } from './components/subjectlist/addsubform/addsubform.component';
+import { EditmarkComponent } from './components/studentdetails/smarkpanel/editmark/editmark.component';
+import { MapComponent } from './components/studentdetails/sdetails/map/map.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 @
 NgModule({
   declarations: [
@@ -32,7 +34,6 @@ NgModule({
     LoginComponent,
     UNavComponent,
     StudentdetailsComponent,
-    AlertComponent,
     DashboardComponent,
     SmarkpanelComponent,
     SdetailsComponent,
@@ -42,7 +43,9 @@ NgModule({
     SubbjectnameComponent,
     AvgmarkComponent,
     SubformComponent,
-    AddsubformComponent
+    AddsubformComponent,
+    EditmarkComponent,
+    MapComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -53,7 +56,8 @@ NgModule({
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    LeafletModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

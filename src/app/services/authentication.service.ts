@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationClient } from '../clients/authentication.client';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  jsonData: any;
+  user: User[]=[];
   private tokenKey = 'token';
   private udatakey = 'udata';
 
 
   constructor(
     private authenticationClient: AuthenticationClient,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   public login(username: string, password: string): void {
     this.authenticationClient.login(username, password).subscribe((token) => {
@@ -25,12 +26,12 @@ export class AuthenticationService {
   public getuserdata(): void {
 
     this.authenticationClient.getuserdata().subscribe((data) => {
-      this.jsonData = JSON.parse(data);
-      localStorage.setItem(this.udatakey, JSON.stringify(this.jsonData[0]));
-      if(this.jsonData[0].role==1){
+      this.user = JSON.parse(data);
+      localStorage.setItem(this.udatakey, JSON.stringify(this.user[0]));
+      if(this.user[0].role==1){
         this.router.navigate(['/student']);
       }
-      else if(this.jsonData[0].role == 0) {
+      else if(this.user[0].role == 0) {
         this.router.navigate(['/dash']);
       }
     });
@@ -51,13 +52,10 @@ export class AuthenticationService {
   }
 
   public getToken(): string | null {
-    console.log(localStorage.getItem(this.tokenKey))
     return this.isLoggedIn() ? localStorage.getItem(this.tokenKey) : null;
   }
 
   public getudata(): any | null {
-    console.log(JSON.parse(localStorage.getItem(String(this.udatakey))!))
-    console.log()
     return JSON.parse(localStorage.getItem(String(this.udatakey))!);
   }
 

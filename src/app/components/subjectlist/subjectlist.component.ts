@@ -1,53 +1,42 @@
-
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DialogserviceService } from 'src/app/services/dialogservice.service';
+import { Subject } from 'src/app/interfaces/subject';
+import { User } from 'src/app/interfaces/user';
+
 @Component({
   selector: 'app-subjectlist',
   templateUrl: './subjectlist.component.html',
   styleUrls: ['./subjectlist.component.css']
 })
+
+
 export class SubjectlistComponent {
 
-  dataFromChild: number = 0;
+  subjects: Subject[] = [];
 
-  receiveDataFromChild(data: number) {
-    this.dataFromChild = data;
-    console.log(this.dataFromChild);
-  }
+  constructor(private http: HttpClient, private dialogService: DialogserviceService) {}
 
-  subData: any = [];
-  userData: any = [];
-  constructor(private http: HttpClient, private dialogService: DialogserviceService) { }
   ngOnInit() {
     this.fetchData();
   }
+
   fetchData() {
-
-    this.http.get(environment.apiUrl + '/subject/')
-      .subscribe((data) => {
-        this.subData = data;
-      }, (error) => {
-
+    this.http.get<Subject[]>(environment.apiUrl + '/subject/')
+      .subscribe({
+        next: (data) => {
+          this.subjects = data;
+        }, error: (error) => { }
       });
+    }
+
+  openDialog(subject: Subject) {
+     this.dialogService.openSubformDialog(subject);
   }
 
-  getRandomColorPairClass() {
-    console.log(this.dataFromChild);
-    const classNames = ['l-bg-cyan', 'l-bg-green', 'l-bg-orange',]; // Add class names for all color pairs
-    const randomIndex = Math.floor(Math.random() * classNames.length);
-    return 'l-bg-green';
+  addSubform() {
+    this.dialogService.openaddSubformDialog();
   }
-
-
-  openDialog(sdata:any) {
-    this.dialogService.openSubformDialog(sdata);
-  }
-
-addSubform(){
-
-  this.dialogService.openaddSubformDialog();
-}
 
 }

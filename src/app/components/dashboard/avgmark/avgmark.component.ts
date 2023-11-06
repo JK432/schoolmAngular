@@ -1,58 +1,43 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Mark } from 'src/app/interfaces/mark';
+
+
 @Component({
   selector: 'app-avgmark',
   templateUrl: './avgmark.component.html',
   styleUrls: ['./avgmark.component.css']
 })
+
+
 export class AvgmarkComponent {
-  markData: any = [];
-  avg:number=0;
-  @Input() subid:any;
+  marks: Mark[] = [];
+  avg: number = 0;
+  @Input() subId: number = -1;
+
   constructor(private http: HttpClient,) { }
-
-  @Output() dataEmitter: EventEmitter<number> = new EventEmitter();
-
-  sendDataToParent() {
-    this.dataEmitter.emit(this.avg);
-
-  }
 
   ngOnInit() {
     this.fetchData();
-
   }
 
-
-
-
   fetchData() {
-    this.http.get(environment.apiUrl + '/mark/?subject='+this.subid )
-      .subscribe((data) => {
-        this.markData = data;
-
-        for (let i = 0; i < this.markData.length; i++) {
-            this.avg = this.avg+this.markData[i].mark;
-            console.log(this.markData[i].mark)
-        }
-        if(this.markData.length>0){
-          this.avg=this.avg/this.markData.length;
-        }else{
-          this.avg= 0;
-        }
-      // Handle the response data
-        this.sendDataToParent()
-      }, (error) => {
-        // Handle any errors
-
+    this.http.get<Mark[]>(environment.apiUrl + '/mark/?subject=' + this.subId)
+      .subscribe({
+        next: (data: Mark[]) => {
+          this.marks = data;
+          for (let i = 0; i < this.marks.length; i++) {
+            this.avg = this.avg + this.marks[i].mark;
+          }
+          if (this.marks.length > 0) {
+            this.avg = this.avg / this.marks.length;
+          } else {
+            this.avg = 0;
+          }
+        },
+        error: (error) => {}
       });
   }
 
-  getRandomColorPairClass() {
-
-    const classNames = ['l-bg-cyan', 'l-bg-green', 'l-bg-orange',]; // Add class names for all color pairs
-    const randomIndex = Math.floor(Math.random() * classNames.length);
-    return 'l-bg-green';
-  }
 }

@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DialogserviceService } from 'src/app/services/dialogservice.service';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-sdetails',
@@ -9,36 +11,34 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./sdetails.component.css']
 })
 
+
 export class SdetailsComponent {
-  jsonData: any = [];
-  userData: any = [];
+  student: User;
+  user: User;
 
   @Input() id: any;
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService,) { }
-
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService, private dialogservice: DialogserviceService) {
+    this.student = { id: -1, email: "", first_name: "", last_name: "", role: 1,latitude:0.0,longitude:0.0 };
+    this.user = { id: -1, email: "", first_name: "", last_name: "", role: 1, latitude: 0.0, longitude: 0.0 }
+  }
 
   ngOnInit() {
-    this.userData = this.authenticationService.getudata();
-    if (this.userData.role == 1) {
-      this.fetchData(this.userData.id);
+    this.user = this.authenticationService.getudata();
+    if (this.user.role == 1) {
+      this.student = this.user;
     } else {
       this.fetchData(this.id);
     }
   }
 
-  fetchData(email: string) {
-    this.http.get(environment.apiUrl + '/register/' + email + '/')
-      .subscribe((data) => {
-        this.userData = data;
-      }, (error) => {
+  fetchData(id: number) {
+    this.http.get<User>(environment.apiUrl + '/register/' + id + '/')
+      .subscribe({
+        next: (data) => {
+          this.student = data;
+        }, error: (error) => {}
       });
-  }
-
-  getRandomColorPairClass() {
-    const classNames = ['l-bg-cyan', 'l-bg-green', 'l-bg-orange',]; // Add class names for all color pairs
-    const randomIndex = Math.floor(Math.random() * classNames.length);
-    return classNames[randomIndex];
   }
 }
 
